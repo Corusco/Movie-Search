@@ -3,12 +3,14 @@
 //  Movie-Search
 //
 //  Created by Joshua Howland on 6/18/14.
+//  Updated by Taylor Mott on 5/20/14.
 //  Copyright (c) 2014 DevMountain. All rights reserved.
 //
 
 #import "MSViewController.h"
 #import "MSResponseTableViewDataSource.h"
 #import "MSMovieDetailViewController.h"
+#import "MovieController.h"
 
 @interface MSViewController () <UITableViewDelegate>
 
@@ -33,15 +35,22 @@
 }
 
 - (IBAction)search:(id)sender {
-
+    [[MovieController sharedInstance] getMoviesWithName:self.searchField.text completion:^(BOOL success) {
+        NSLog(success ? @"Yes, search" : @"No, search");
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    MSMovieDetailViewController *detailViewController = [MSMovieDetailViewController new];
-    [self.navigationController pushViewController:detailViewController animated:YES];
+    
+    [[MovieController sharedInstance] getMovieWithID:[MovieController sharedInstance].resultMovies[indexPath.row][@"id"] completion:^(BOOL success) {
+        NSLog(success ? @"Yes, result movie" : @"No, result movie");
+        MSMovieDetailViewController *detailViewController = [MSMovieDetailViewController new];
+        [self.navigationController pushViewController:detailViewController animated:YES];
+    }];
 }
 
 @end
