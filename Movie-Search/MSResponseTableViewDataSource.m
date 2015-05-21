@@ -8,8 +8,7 @@
 
 #import "MSResponseTableViewDataSource.h"
 #import "MovieController.h"
-
-#import <AFNetworking/UIImageView+AFNetworking.h>
+#import "Movie.h"
 
 static NSString * const cellReuseKey = @"cell";
 
@@ -30,12 +29,11 @@ static NSString * const cellReuseKey = @"cell";
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellReuseKey];
     }
     
-    NSDictionary *movie = [MovieController sharedInstance].resultMovies[indexPath.row];
-    cell.textLabel.text = movie[@"title"];
-    
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ - %@", movie[@"release_date"], movie[@"vote_average"]];
-    
-    [cell.imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://image.tmdb.org/t/p/w92/%@", movie[@"poster_path"]]]];
+    Movie *movie = [[Movie alloc]initWithDictionary:[MovieController sharedInstance].resultMovies[indexPath.row]];
+   
+    cell.textLabel.text = movie.title;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ - %@",movie.releaseDate, movie.averageVote];
+    cell.imageView.image = movie.posterImage;
     
     return cell;
 }
