@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Movie.h"
 
 @interface MSMovieDetailViewController : UIViewController
 
-- (void)updateWithMovie:(NSDictionary *)movie;
+- (void)updateWithMovie:(Movie *)movie;
 
 @end

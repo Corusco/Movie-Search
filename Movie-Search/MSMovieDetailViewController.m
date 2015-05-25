@@ -14,8 +14,8 @@
 
 @implementation MSMovieDetailViewController
 
-- (void)updateWithMovie:(NSDictionary *)movie {
-
+- (void)updateWithMovie:(Movie *)movie {
+    
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
